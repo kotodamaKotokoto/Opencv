@@ -48,13 +48,8 @@ int main() {
 	Mat roi = black_mat(cv::Rect(0, 0, paste_image.cols, paste_image.rows));
 
 
-	double angle = 90;
-	double scale = 0.6;
-	Mat affine = cv::getRotationMatrix2D(Point(base_image.cols / 2, base_image.rows / 2), angle, scale);
-
-	cv::warpAffine(paste_image, paste_image, affine, Size(paste_image.cols, paste_image.rows));
-	ShowImage(paste_image);
-	paste_image.copyTo(roi);
+	
+	paste_image.copyTo(roi);	// Ç±Ç±Ç≈í£ÇËïtÇØÇÁÇÍÇΩÅB
 
 	ShowImage(black_mat);
 	ShowImage(paste_image);
@@ -71,10 +66,14 @@ int main() {
 	int roi_size_x = base_image.rows;
 	int roi_size_y = base_image.cols;
 
-	
+	double angle = 90;
+	double scale = 0.6;
+	Mat affine = cv::getRotationMatrix2D(Point(paste_image.cols / 2, paste_image.rows / 2), angle, scale);
 
-	ShowImage(black_mat);
-
+	cv::warpAffine(no_alpha_channel, no_alpha_channel, affine, Size(roi_size_y, roi_size_x));
+	cv::warpAffine(alpha_channel, alpha_channel, affine, Size(roi_size_y, roi_size_x));
+	ShowImage(no_alpha_channel);
+	ShowImage(alpha_channel);
 
 	Mat roi_image(base_image, Rect(0, 0, roi_size_y, roi_size_x));
 	
